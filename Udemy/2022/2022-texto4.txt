@@ -1,0 +1,6 @@
+Habitantes: 12325232 - Cidade: São Paulo
+Habitantes: 6747815 - Cidade: Rio de Janeiro
+Habitantes: 3055149 - Cidade: Brasília
+Habitantes: 2886698 - Cidade: Salvador
+Habitantes: 2686612 - Cidade: Fortaleza
+Habitantes: 2521564 - Cidade: Belo Horizonte
