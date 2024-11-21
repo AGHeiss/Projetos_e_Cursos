@@ -21,6 +21,8 @@ mostrando que ele não foi trabalhado.
 6 - Elaborar o sistema de comparações para exibir o menu de acordo com as ultimas designações atribuídas.
 
 7 - Testar a lógica usando Python
+
+Projeto funcionando
 """
 import datetime
 
