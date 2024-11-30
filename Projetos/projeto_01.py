@@ -1,243 +1,437 @@
 """
-O objetivo desse projeto é criar uma lógica para ser usada em um aplicativo, um aplicativo de designações de territórios para trabalho voluntário, 
-que além de registrar as designações, mostrar os status principais do que já foi designado comparando com o dia de atual.
-
-1 - Importar datetime
-
-2 - Atribuir a data atual numa variável
-
-3 - Perguntar para o usuário o dia que foi registrado a designação do território e armazenar numa variável
-  - Perguntar para o usuário o território que foi trabalhado no dia já informado e armazenar numa variável
-
-4 - Se o território já foi registrado naquele mesmo dia, informar ao usuário que já foi registrado essa designação e mostrar
-o menu com os status de todos os territórios com base na data atual, por exemplo: 
-- Os ultimos territórios trabalhados mostrando há quantos dias atrás eles foram trabalhados, 
-mostrar todos os territórios desde os que ainda não foram trabalhados aos que foram designados recentemente.
-- Quantas vezes os territórios foram trabalhados
-
-5 - Registrar a designação num dicionário (exemplo) em que a chave seja a data, e o valor seja 1 caso o território foi trabalhado naquele dia, ou 0 por padrão,
-mostrando que ele não foi trabalhado.
-
-6 - Elaborar o sistema de comparações para exibir o menu de acordo com as ultimas designações atribuídas.
-
-7 - Testar a lógica usando Python
-
-Projeto funcionando
+The main objective of this project is to create an app of territory, where it can appoint territory and register the date of the appointment
+on a specific dictionary of that territory, later we will be using for calculate what we want based on the dates appointed that territory.
+For example we can ask the application to show us all the territory and the date all of them is with no appointment yet, so we can choose better
+which territory we will appoint according to the dates with no appointment yet. This is one example but we can calculate other things based on the
+date of the appointment.
 """
 import datetime
 
+from pydantic import BaseModel, Field
 
-class Territorios:
-    
+
+class Territory:
     def __init__(self):
 
-        self.dia_atual = datetime.datetime.today().date()
-        territorio_01 = {}
-        territorio_02 = {}
-        territorio_03 = {}
-        territorio_04 = {}
-        territorio_05 = {}
-        territorio_06 = {}
-        territorio_07 = {}
-        territorio_08 = {}
-        territorio_09 = {}
-        territorio_10 = {}
-        territorio_11 = {}
-        territorio_12 = {}
-        territorio_13 = {}
-        territorio_14 = {}
-        territorio_15 = {}
-        territorio_16 = {}
-        territorio_17 = {}
-        self.territorio_01 = territorio_01
-        self.territorio_02 = territorio_02
-        self.territorio_03 = territorio_03
-        self.territorio_04 = territorio_04
-        self.territorio_05 = territorio_05
-        self.territorio_06 = territorio_06
-        self.territorio_07 = territorio_07
-        self.territorio_08 = territorio_08
-        self.territorio_09 = territorio_09
-        self.territorio_10 = territorio_10
-        self.territorio_11 = territorio_11
-        self.territorio_12 = territorio_12
-        self.territorio_13 = territorio_13
-        self.territorio_14 = territorio_14
-        self.territorio_15 = territorio_15
-        self.territorio_16 = territorio_16
-        self.territorio_17 = territorio_17
-        self.dias_sem_trabalhar = []
-        self.dias_trabalhados = []
+        self.day_atual = datetime.datetime.today().date()
+        territory_01 = {}
+        territory_02 = {}
+        territory_03 = {}
+        territory_04 = {}
+        territory_05 = {}
+        territory_06 = {}
+        territory_07 = {}
+        territory_08 = {}
+        territory_09 = {}
+        territory_10 = {}
+        territory_11 = {}
+        territory_12 = {}
+        territory_13 = {}
+        territory_14 = {}
+        territory_15 = {}
+        territory_16 = {}
+        territory_17 = {}
+        self.territory_01 = territory_01
+        self.territory_02 = territory_02
+        self.territory_03 = territory_03
+        self.territory_04 = territory_04
+        self.territory_05 = territory_05
+        self.territory_06 = territory_06
+        self.territory_07 = territory_07
+        self.territory_08 = territory_08
+        self.territory_09 = territory_09
+        self.territory_10 = territory_10
+        self.territory_11 = territory_11
+        self.territory_12 = territory_12
+        self.territory_13 = territory_13
+        self.territory_14 = territory_14
+        self.territory_15 = territory_15
+        self.territory_16 = territory_16
+        self.territory_17 = territory_17
+        self.days_not_worked = []
+        self.days_worked = []
 
-    def designar_territorio(self, data_da_designacao, territorio_designado):
-        self.data_da_designacao = datetime.datetime.strptime(data_da_designacao, "%d/%m/%Y").date()
-        self.territorio_designado = territorio_designado
-        if self.territorio_designado == 1:
-            self.territorio_01[self.data_da_designacao] = 1
-        elif self.territorio_designado == 2:
-            self.territorio_02[self.data_da_designacao] = 1
-        elif self.territorio_designado == 3:
-            self.territorio_03[self.data_da_designacao] = 1
-        elif self.territorio_designado == 4:
-            self.territorio_04[self.data_da_designacao] = 1
-        elif self.territorio_designado == 5:
-            self.territorio_05[self.data_da_designacao] = 1
-        elif self.territorio_designado == 6:
-            self.territorio_06[self.data_da_designacao] = 1
-        elif self.territorio_designado == 7:
-            self.territorio_07[self.data_da_designacao] = 1
-        elif self.territorio_designado == 8:
-            self.territorio_08[self.data_da_designacao] = 1
-        elif self.territorio_designado == 9:
-            self.territorio_09[self.data_da_designacao] = 1
-        elif self.territorio_designado == 10:
-            self.territorio_10[self.data_da_designacao] = 1
-        elif self.territorio_designado == 11:
-            self.territorio_11[self.data_da_designacao] = 1
-        elif self.territorio_designado == 12:
-            self.territorio_12[self.data_da_designacao] = 1
-        elif self.territorio_designado == 13:
-            self.territorio_13[self.data_da_designacao] = 1
-        elif self.territorio_designado == 14:
-            self.territorio_14[self.data_da_designacao] = 1
-        elif self.territorio_designado == 15:
-            self.territorio_15[self.data_da_designacao] = 1
-        elif self.territorio_designado == 16:
-            self.territorio_16[self.data_da_designacao] = 1
-        elif self.territorio_designado == 17:
-            self.territorio_17[self.data_da_designacao] = 1
+    def delete_territory(self, date_of_appointment, worked_territory):
+        self.date_of_appointment = datetime.datetime.strptime(date_of_appointment, "%d/%m/%Y").date()
+        self.worked_territory = worked_territory
+        if self.worked_territory == 1:
+            keys = list(self.territory_01.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_01.pop(i)
+        elif self.worked_territory == 2:
+            keys = list(self.territory_02.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_02.pop(i)
+        elif self.worked_territory == 3:
+            keys = list(self.territory_03.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_03.pop(i)
+        elif self.worked_territory == 4:
+            keys = list(self.territory_04.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_04.pop(i)
+        elif self.worked_territory == 5:
+            keys = list(self.territory_05.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_05.pop(i)
+        elif self.worked_territory == 6:
+            keys = list(self.territory_06.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_06.pop(i)
+        elif self.worked_territory == 7:
+            keys = list(self.territory_07.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_07.pop(i)
+        elif self.worked_territory == 8:
+            keys = list(self.territory_08.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_08.pop(i)
+        elif self.worked_territory == 9:
+            keys = list(self.territory_09.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_09.pop(i)
+        elif self.worked_territory == 10:
+            keys = list(self.territory_10.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_10.pop(i)
+        elif self.worked_territory == 11:
+            keys = list(self.territory_11.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_11.pop(i)
+        elif self.worked_territory == 12:
+            keys = list(self.territory_12.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_12.pop(i)
+        elif self.worked_territory == 13:
+            keys = list(self.territory_13.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_13.pop(i)
+        elif self.worked_territory == 14:
+            keys = list(self.territory_14.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_14.pop(i)
+        elif self.worked_territory == 15:
+            keys = list(self.territory_15.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_15.pop(i)
+        elif self.worked_territory == 16:
+            keys = list(self.territory_16.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_16.pop(i)
+        elif self.worked_territory == 17:
+            keys = list(self.territory_17.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_17.pop(i)
         else:
-            print(f'Esse território {self.territorio_designado} não existe ou o valor está incorreto. Tente digitar valores entre 1 a 17!')
+            return f"Você digitou um território ou uma data incorreta!"
 
-    def menu_trabalhos(self):
-        dias_01 = []
-        dias_02 = []
-        dias_03 = []
-        dias_04 = []
-        dias_05 = []
-        dias_06 = []
-        dias_07 = []
-        dias_08 = []
-        dias_09 = []
-        dias_10 = []
-        dias_11 = []
-        dias_12 = []
-        dias_13 = []
-        dias_14 = []
-        dias_15 = []
-        dias_16 = []
-        dias_17 = []
-        if len(self.territorio_01) > 0:
-            for chave in self.territorio_01:
-                dia = self.dia_atual - chave
-                dias_01.append(dia)
-            self.dias_trabalhados.append(len(dias_01))               
-            self.dias_sem_trabalhar.append(min(dias_01))
-        if len(self.territorio_02) > 0:
-            for chave in self.territorio_02:
-                dia = self.dia_atual - chave
-                dias_02.append(dia)
-            self.dias_trabalhados.append(len(dias_02))
-            self.dias_sem_trabalhar.append(min(dias_02))
-        if len(self.territorio_03) > 0:
-            for chave in self.territorio_03:
-                dia = self.dia_atual - chave
-                dias_03.append(dia)
-            self.dias_trabalhados.append(len(dias_03))
-            self.dias_sem_trabalhar.append(min(dias_03))
-        if len(self.territorio_04) > 0:
-            for chave in self.territorio_04:
-                dia = self.dia_atual - chave
-                dias_04.append(dia)
-            self.dias_trabalhados.append(len(dias_04))
-            self.dias_sem_trabalhar.append(min(dias_04))
-        if len(self.territorio_05) > 0:
-            for chave in self.territorio_05:
-                dia = self.dia_atual - chave
-                dias_05.append(dia)
-            self.dias_trabalhados.append(len(dias_05))
-            self.dias_sem_trabalhar.append(min(dias_05))
-        if len(self.territorio_06) > 0:
-            for chave in self.territorio_06:
-                dia = self.dia_atual - chave
-                dias_06.append(dia)
-            self.dias_trabalhados.append(len(dias_06))
-            self.dias_sem_trabalhar.append(min(dias_06))
-        if len(self.territorio_07) > 0:
-            for chave in self.territorio_07:
-                dia = self.dia_atual - chave
-                dias_07.append(dia)
-            self.dias_trabalhados.append(len(dias_07))
-            self.dias_sem_trabalhar.append(min(dias_07))
-        if len(self.territorio_08) > 0:
-            for chave in self.territorio_08:
-                dia = self.dia_atual - chave
-                dias_08.append(dia)
-            self.dias_trabalhados.append(len(dias_08))
-            self.dias_sem_trabalhar.append(min(dias_08))
-        if len(self.territorio_09) > 0:
-            for chave in self.territorio_09:
-                dia = self.dia_atual - chave
-                dias_09.append(dia)
-            self.dias_trabalhados.append(len(dias_09))
-            self.dias_sem_trabalhar.append(min(dias_09))
-        if len(self.territorio_10) > 0:
-            for chave in self.territorio_10:
-                dia = self.dia_atual - chave
-                dias_10.append(dia)
-            self.dias_trabalhados.append(len(dias_10))
-            self.dias_sem_trabalhar.append(min(dias_10))
-        if len(self.territorio_11) > 0:
-            for chave in self.territorio_11:
-                dia = self.dia_atual - chave
-                dias_11.append(dia)
-            self.dias_trabalhados.append(len(dias_11))
-            self.dias_sem_trabalhar.append(min(dias_11))
-        if len(self.territorio_12) > 0:
-            for chave in self.territorio_12:
-                dia = self.dia_atual - chave
-                dias_12.append(dia)
-            self.dias_trabalhados.append(len(dias_12))
-            self.dias_sem_trabalhar.append(min(dias_12))
-        if len(self.territorio_13) > 0:
-            for chave in self.territorio_13:
-                dia = self.dia_atual - chave
-                dias_13.append(dia)
-            self.dias_trabalhados.append(len(dias_13))
-            self.dias_sem_trabalhar.append(min(dias_13))
-        if len(self.territorio_14) > 0:
-            for chave in self.territorio_14:
-                dia = self.dia_atual - chave
-                dias_14.append(dia)
-            self.dias_trabalhados.append(len(dias_14))
-            self.dias_sem_trabalhar.append(min(dias_14))
-        if len(self.territorio_15) > 0:
-            for chave in self.territorio_15:
-                dia = self.dia_atual - chave
-                dias_15.append(dia)
-            self.dias_trabalhados.append(len(dias_15))
-            self.dias_sem_trabalhar.append(min(dias_15))
-        if len(self.territorio_16) > 0:
-            for chave in self.territorio_16:
-                dia = self.dia_atual - chave
-                dias_16.append(dia)
-            self.dias_trabalhados.append(len(dias_16))
-            self.dias_sem_trabalhar.append(min(dias_16))
-        if len(self.territorio_17) > 0:
-            for chave in self.territorio_17:
-                dia = self.dia_atual - chave
-                dias_17.append(dia)
-            self.dias_trabalhados.append(len(dias_17))
-            self.dias_sem_trabalhar.append(min(dias_17))
-        contagem = 1
-        indice = 0
-        for i in self.dias_sem_trabalhar:
-            print(f'Território {contagem}: {i} sem trabalhar, esse território foi trabalhado {self.dias_trabalhados[indice]} vezes'
-                  ' em todo o período registrado')
-            contagem += 1
-            indice += 1
+    def update_territory(self, date_of_appointment, new_date_of_appointment, worked_territory):
+        self.date_of_appointment = datetime.datetime.strptime(date_of_appointment, "%d/%m/%Y").date()
+        self.worked_territory = worked_territory
+        self.new_date_of_appointment = datetime.datetime.strptime(new_date_of_appointment, "%d/%m/%Y").date()
+        if self.worked_territory == 1:
+            keys = list(self.territory_01.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_01[self.new_date_of_appointment] = 1
+                    self.territory_01.pop(i)
+        elif self.worked_territory == 2:
+            keys = list(self.territory_02.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_02[self.new_date_of_appointment] = 1
+                    self.territory_02.pop(i)
+        elif self.worked_territory == 3:
+            keys = list(self.territory_03.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_03[self.new_date_of_appointment] = 1
+                    self.territory_03.pop(i)
+        elif self.worked_territory == 4:
+            keys = list(self.territory_04.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_04[self.new_date_of_appointment] = 1
+                    self.territory_04.pop(i)
+        elif self.worked_territory == 5:
+            keys = list(self.territory_05.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_05[self.new_date_of_appointment] = 1
+                    self.territory_05.pop(i)
+        elif self.worked_territory == 6:
+            keys = list(self.territory_06.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_06[self.new_date_of_appointment] = 1
+                    self.territory_06.pop(i)
+        elif self.worked_territory == 7:
+            keys = list(self.territory_07.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_07[self.new_date_of_appointment] = 1
+                    self.territory_07.pop(i)
+        elif self.worked_territory == 8:
+            keys = list(self.territory_08.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_08[self.new_date_of_appointment] = 1
+                    self.territory_08.pop(i)
+        elif self.worked_territory == 9:
+            keys = list(self.territory_09.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_09[self.new_date_of_appointment] = 1
+                    self.territory_09.pop(i)
+        elif self.worked_territory == 10:
+            keys = list(self.territory_10.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_10[self.new_date_of_appointment] = 1
+                    self.territory_10.pop(i)
+        elif self.worked_territory == 11:
+            keys = list(self.territory_11.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_11[self.new_date_of_appointment] = 1
+                    self.territory_11.pop(i)
+        elif self.worked_territory == 12:
+            keys = list(self.territory_12.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_12[self.new_date_of_appointment] = 1
+                    self.territory_12.pop(i)
+        elif self.worked_territory == 13:
+            keys = list(self.territory_13.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_13[self.new_date_of_appointment] = 1
+                    self.territory_13.pop(i)
+        elif self.worked_territory == 14:
+            keys = list(self.territory_14.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_14[self.new_date_of_appointment] = 1
+                    self.territory_14.pop(i)
+        elif self.worked_territory == 15:
+            keys = list(self.territory_15.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_15[self.new_date_of_appointment] = 1
+                    self.territory_15.pop(i)
+        elif self.worked_territory == 16:
+            keys = list(self.territory_16.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_16[self.new_date_of_appointment] = 1
+                    self.territory_16.pop(i)
+        elif self.worked_territory == 17:
+            keys = list(self.territory_17.keys())
+            for i in keys:
+                if i == self.date_of_appointment:
+                    self.territory_17[self.new_date_of_appointment] = 1
+                    self.territory_17.pop(i)
+        else:
+            return f"Você digitou um território ou uma data incorreta!"
 
+    def appoint_territory(self, date_of_appointment, worked_territory):
+        self.date_of_appointment = datetime.datetime.strptime(date_of_appointment, "%d/%m/%Y").date()
+        self.worked_territory = worked_territory
+        if self.worked_territory == 1:
+            self.territory_01[self.date_of_appointment] = 1
+        elif self.worked_territory == 2:
+            self.territory_02[self.date_of_appointment] = 1
+        elif self.worked_territory == 3:
+            self.territory_03[self.date_of_appointment] = 1
+        elif self.worked_territory == 4:
+            self.territory_04[self.date_of_appointment] = 1
+        elif self.worked_territory == 5:
+            self.territory_05[self.date_of_appointment] = 1
+        elif self.worked_territory == 6:
+            self.territory_06[self.date_of_appointment] = 1
+        elif self.worked_territory == 7:
+            self.territory_07[self.date_of_appointment] = 1
+        elif self.worked_territory == 8:
+            self.territory_08[self.date_of_appointment] = 1
+        elif self.worked_territory == 9:
+            self.territory_09[self.date_of_appointment] = 1
+        elif self.worked_territory == 10:
+            self.territory_10[self.date_of_appointment] = 1
+        elif self.worked_territory == 11:
+            self.territory_11[self.date_of_appointment] = 1
+        elif self.worked_territory == 12:
+            self.territory_12[self.date_of_appointment] = 1
+        elif self.worked_territory == 13:
+            self.territory_13[self.date_of_appointment] = 1
+        elif self.worked_territory == 14:
+            self.territory_14[self.date_of_appointment] = 1
+        elif self.worked_territory == 15:
+            self.territory_15[self.date_of_appointment] = 1
+        elif self.worked_territory == 16:
+            self.territory_16[self.date_of_appointment] = 1
+        elif self.worked_territory == 17:
+            self.territory_17[self.date_of_appointment] = 1
+        else:
+            print(f'This territory you typed {self.worked_territory} does not exist or it is incorrect. Please type values between 1 and 17!')
 
+    def menu_worked_days(self):
+        days_01 = []
+        days_02 = []
+        days_03 = []
+        days_04 = []
+        days_05 = []
+        days_06 = []
+        days_07 = []
+        days_08 = []
+        days_09 = []
+        days_10 = []
+        days_11 = []
+        days_12 = []
+        days_13 = []
+        days_14 = []
+        days_15 = []
+        days_16 = []
+        days_17 = []
+        if len(self.territory_01) > 0:
+            for key in self.territory_01:
+                day = self.day_atual - key
+                days_01.append(day)
+            self.days_worked.append(len(days_01))               
+            self.days_not_worked.append(min(days_01))
+        if len(self.territory_02) > 0:
+            for key in self.territory_02:
+                day = self.day_atual - key
+                days_02.append(day)
+            self.days_worked.append(len(days_02))
+            self.days_not_worked.append(min(days_02))
+        if len(self.territory_03) > 0:
+            for key in self.territory_03:
+                day = self.day_atual - key
+                days_03.append(day)
+            self.days_worked.append(len(days_03))
+            self.days_not_worked.append(min(days_03))
+        if len(self.territory_04) > 0:
+            for key in self.territory_04:
+                day = self.day_atual - key
+                days_04.append(day)
+            self.days_worked.append(len(days_04))
+            self.days_not_worked.append(min(days_04))
+        if len(self.territory_05) > 0:
+            for key in self.territory_05:
+                day = self.day_atual - key
+                days_05.append(day)
+            self.days_worked.append(len(days_05))
+            self.days_not_worked.append(min(days_05))
+        if len(self.territory_06) > 0:
+            for key in self.territory_06:
+                day = self.day_atual - key
+                days_06.append(day)
+            self.days_worked.append(len(days_06))
+            self.days_not_worked.append(min(days_06))
+        if len(self.territory_07) > 0:
+            for key in self.territory_07:
+                day = self.day_atual - key
+                days_07.append(day)
+            self.days_worked.append(len(days_07))
+            self.days_not_worked.append(min(days_07))
+        if len(self.territory_08) > 0:
+            for key in self.territory_08:
+                day = self.day_atual - key
+                days_08.append(day)
+            self.days_worked.append(len(days_08))
+            self.days_not_worked.append(min(days_08))
+        if len(self.territory_09) > 0:
+            for key in self.territory_09:
+                day = self.day_atual - key
+                days_09.append(day)
+            self.days_worked.append(len(days_09))
+            self.days_not_worked.append(min(days_09))
+        if len(self.territory_10) > 0:
+            for key in self.territory_10:
+                day = self.day_atual - key
+                days_10.append(day)
+            self.days_worked.append(len(days_10))
+            self.days_not_worked.append(min(days_10))
+        if len(self.territory_11) > 0:
+            for key in self.territory_11:
+                day = self.day_atual - key
+                days_11.append(day)
+            self.days_worked.append(len(days_11))
+            self.days_not_worked.append(min(days_11))
+        if len(self.territory_12) > 0:
+            for key in self.territory_12:
+                day = self.day_atual - key
+                days_12.append(day)
+            self.days_worked.append(len(days_12))
+            self.days_not_worked.append(min(days_12))
+        if len(self.territory_13) > 0:
+            for key in self.territory_13:
+                day = self.day_atual - key
+                days_13.append(day)
+            self.days_worked.append(len(days_13))
+            self.days_not_worked.append(min(days_13))
+        if len(self.territory_14) > 0:
+            for key in self.territory_14:
+                day = self.day_atual - key
+                days_14.append(day)
+            self.days_worked.append(len(days_14))
+            self.days_not_worked.append(min(days_14))
+        if len(self.territory_15) > 0:
+            for key in self.territory_15:
+                day = self.day_atual - key
+                days_15.append(day)
+            self.days_worked.append(len(days_15))
+            self.days_not_worked.append(min(days_15))
+        if len(self.territory_16) > 0:
+            for key in self.territory_16:
+                day = self.day_atual - key
+                days_16.append(day)
+            self.days_worked.append(len(days_16))
+            self.days_not_worked.append(min(days_16))
+        if len(self.territory_17) > 0:
+            for key in self.territory_17:
+                day = self.day_atual - key
+                days_17.append(day)
+            self.days_worked.append(len(days_17))
+            self.days_not_worked.append(min(days_17))
+        count = 1
+        index = 0
+        list_api = []
+        dict_api = {}
+        for i in self.days_not_worked:
+            list_01 = f'Territory {count}: {i} days with no appointment, this territory was appointed {self.days_worked[index]} times'
+            list_api.append(list_01)
+            count += 1
+            index += 1
+        for a in list_api:
+            print(a)
+        for b, c in enumerate(list_api):
+            dict_api[b] = c
+        return dict_api
 
-      
+class AppointmentRequest(BaseModel):
+    date: str = Field(..., example="29/11/2024")
+    territory: int = Field(..., example=1)
+
+class AppointmentUpdate(BaseModel):
+    date: str = Field(..., example="29/11/2024")
+    new_date: str = Field(..., example="29/11/2024")
+    territory: int = Field(..., example=1)
 
