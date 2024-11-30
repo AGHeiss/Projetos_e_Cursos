@@ -355,3 +355,6 @@ returns a dictionary based on those values
 #
 # hero_battle(heroi, inimigo1)
 
+"""
+Commiting
+"""
