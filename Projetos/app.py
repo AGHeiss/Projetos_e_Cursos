@@ -253,7 +253,9 @@ def update_appointment(update_appointment: AppointmentUpdate):
 def delete_appointment(delete_appointment: AppointmentRequest):
     Territory.delete_territory(home_01, delete_appointment.date, delete_appointment.territory)
     return "The territory was deleted!"
-
+"""
+Commiting
+"""
 
 
 

@@ -435,3 +435,6 @@ class AppointmentUpdate(BaseModel):
     new_date: str = Field(..., example="29/11/2024")
     territory: int = Field(..., example=1)
 
+"""
+Commiting
+"""

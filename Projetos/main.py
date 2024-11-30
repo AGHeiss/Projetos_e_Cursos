@@ -1,6 +1,8 @@
 import os
 from projeto_01 import Territory
-
+"""
+Commiting
+"""
 os.system('cls')
 
 home_01 = Territory()
