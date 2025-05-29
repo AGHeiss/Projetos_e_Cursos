@@ -358,3 +358,21 @@ returns a dictionary based on those values
 """
 Commiting
 """
+
+def prime_numbers(calculate_primes_until_x):
+    primes = []
+    for i in range(2, calculate_primes_until_x + 1):
+        is_prime = True
+        for p in primes:
+            if i % p == 0:
+                is_prime = False
+                break
+        if is_prime:
+           primes.append(i)
+    return primes
+
+print(prime_numbers(2500))
+
+
+
+
