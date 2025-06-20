@@ -5,6 +5,122 @@ For example we can ask the application to show us all the territory and the date
 which territory we will appoint according to the dates with no appointment yet. This is one example but we can calculate other things based on the
 date of the appointment.
 """
+import sqlite3
+from datetime import datetime
+
+conn = sqlite3.connect('territorios.db')
+modify = conn.cursor()
+
+modify.execute('''
+CREATE TABLE IF NOT EXISTS territorios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    territorio TEXT NOT NULL,
+    data TEXT NOT NULL,
+    nome TEXT NOT NULL,
+    UNIQUE(territorio, data)
+    )''')
+conn.commit()
+
+#Função para inserir uma designação
+def appoint_territory(data_str, territorio, nome):
+    novo_territorio = territorio.upper()
+    novo_nome = nome.upper()
+    new_date = datetime.strptime(data_str, '%d/%m/%Y').strftime('%Y-%m-%d')
+    modify.execute("INSERT OR IGNORE INTO territorios (territorio, data, nome) VALUES (?, ?, ?)", (novo_territorio, new_date, novo_nome))
+    conn.commit()
+    
+#Consultar ultima data de território
+def appointed_summary():
+    modify.execute('''
+        SELECT
+            territorio, 
+            MAX(data) as last_date,
+            COUNT(*) as total_appointment
+        FROM territorios
+        GROUP BY territorio
+        ''')
+    calculate = modify.fetchall()
+    today = datetime.now().date()
+    
+    for territory, last_date, total in calculate:
+        dias = (today - datetime.strptime(last_date, '%Y-%m-%d').date()).days
+        print(f"Território {territory}")
+        print(f"   - Última designação há {dias} dias")
+        print(f"   - Total de designações: {total}")
+        print("-" * 30)
+        
+# Ver todas as designações de cada território
+def get_appointed_data_territory():
+        modify.execute('''
+            SELECT
+                territorio,
+                data,
+                nome
+            FROM territorios
+            ORDER BY territorio, data
+            
+            ''')
+        calculate = modify.fetchall()
+        current_territory = None
+        for territory, data, nome in calculate:
+            if current_territory != territory:
+               print(f"Território: {territory}")
+               current_territory = territory
+            print(f"Data: {data} | Nome: {nome}")
+            
+# Ver todas as designações de um nome específico
+def get_name_data_territory(name):
+        modify.execute('''
+            SELECT
+                nome,
+                data,
+                territorio
+            FROM territorios
+            ORDER BY nome
+        
+        ''')
+        calculate = modify.fetchall()
+        current_name = None
+        
+        for nome, data, territorio in calculate:
+            if name == nome:
+                if current_name != name:
+                    print(f"Nome: {nome}")
+                    current_name = name
+                print(f"Data: {data}  |  Territorio: {territorio}")
+                
+def remove_appointment(data_str, territorio):
+        try:
+            novo_territorio = territorio.upper()
+            new_data = datetime.strptime(data_str, '%d/%m/%Y').strftime('%Y-%m-%d')
+            modify.execute('''
+            DELETE FROM territorios WHERE data = ? AND territorio = ?          
+            ''', (new_data, novo_territorio))
+            conn.commit()
+            if modify.rowcount > 0:
+                print(f"Designação foi deletada referente a Data: {data_str} e o Território: {territorio}.")
+            else:
+                print(f"Designação não foi encontrada, Data {data_str} ou Território {territorio} inválido.")
+        except Exception as e:
+            print("Erro ao remover a designação: ", e)
+  
+        
+        
+appoint_territory("01/06/2025", "1", "TESTE")
+appoint_territory("02/06/2025", "1", "TESTE")
+appoint_territory("01/06/2025", "2", "TESTE")
+appoint_territory("03/06/2025", "3", "TESTE 2")
+appoint_territory("03/06/2025", "4", "TESTE 2")
+appoint_territory("03/06/2025", "5", "TESTE 2")
+appointed_summary()
+get_appointed_data_territory()
+get_name_data_territory("TESTE")
+
+
+
+"""
+Old code
+
 import datetime
 
 from pydantic import BaseModel, Field
@@ -435,6 +551,4 @@ class AppointmentUpdate(BaseModel):
     new_date: str = Field(..., example="29/11/2024")
     territory: int = Field(..., example=1)
 
-"""
-Commiting
 """
